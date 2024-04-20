@@ -1,31 +1,35 @@
+# #     """
+"""
+ASGI config for mysite project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
+"""
 import os
-from django.apps import apps
-from django.conf import settings
-from django.core.wsgi import get_wsgi_application
+from django.core.asgi import get_asgi_application
+import django
+from fastapi.middleware.cors import CORSMiddleware
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "anverali.settings")
-apps.populate(settings.INSTALLED_APPS)
+django.setup()
+application = get_asgi_application()
 
-
+from gender_service.handlers import router
 from fastapi import FastAPI
-from fastapi.middleware.wsgi import WSGIMiddleware
-from starlette.middleware.cors import CORSMiddleware
 
+app = FastAPI()
+app.include_router(router)
+fastapp = app
 
-def get_application() -> FastAPI:
-    app = FastAPI(debug=settings.DEBUG)
-    app.add_middleware(
-        CORSMiddleware)
-    #     allow_origins=settings.ALLOWED_HOSTS or ["*"],
-    #     allow_credentials=True,
-    #     allow_methods=["*"],
-    #     allow_headers=["*"],
+origins = ["*"]
 
-    #app.include_router(handlers.router, prefix="/api")
-    app.mount("/django", WSGIMiddleware(get_wsgi_application()))
-
-    return app
-
-
-app = get_application()
+fastapp.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

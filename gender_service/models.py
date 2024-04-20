@@ -4,17 +4,32 @@ from django.db import models
 
 
 class Gender(models.Model):
-    gender = models.CharField(max_length=255)
+
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+
+    gender = models.CharField(max_length=255, choices=GENDER_CHOICES)
+
+    def __str__(self):
+        return self.gender
 
 
-class ManNames(models.Model):
+class MenNames(models.Model):
     names_man = models.CharField(max_length=255)
-    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, default=None)
+    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, null=True, default=None)
+
+    def __str__(self):
+        return self.names_man
 
 
 class WomenNames(models.Model):
     names_woman = models.CharField(max_length=255)
-    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, default=None)
+    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, null=True, default=None)
+
+    def __str__(self):
+        return self.names_woman
 
 
 
