@@ -10,7 +10,7 @@ def set_gender(contacts: ContactRequest) -> dict:
         Gender.objects.filter(id=man.id).update(gender="M")
         return {"id": man.id, "name": man.names_man, "gender": "M"}
 
-    woman = WomenNames.objects.filter(id=contacts.id, names_man=contacts.name).first()
+    woman = WomenNames.objects.filter(Q(id=contacts.id) & Q(names_woman=contacts.name)).first()
     if woman is not None:
         Gender.objects.filter(id=woman.id).update(gender="F")
         return {"id": woman.id, "name": woman.names_man, "gender": "F"}
