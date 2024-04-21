@@ -3,36 +3,33 @@ from django.db import models
 # Create your models here.
 
 
-class Gender(models.Model):
+class MenNames(models.Model):
+    """
+    Мужские имена таблица names_man
+    """
 
     GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('Мужской', 'М'),
     )
-
-    gender = models.CharField(max_length=255, choices=GENDER_CHOICES)
-
-    def __str__(self):
-        return self.gender
-
-
-class MenNames(models.Model):
     names_man = models.CharField(max_length=255)
-    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, null=True, default=None)
+    bitrix_id = models.IntegerField(unique=True)
+    gender = models.CharField(max_length=255, null=True, blank=True, choices=GENDER_CHOICES)
 
     def __str__(self):
         return self.names_man
 
 
 class WomenNames(models.Model):
+    """
+    Женские имена таблица names_woman
+    """
+
+    GENDER_CHOICES = (
+        ('Женский', 'Ж'),
+    )
     names_woman = models.CharField(max_length=255)
-    gender = models.ForeignKey(Gender, blank=True, on_delete=models.SET_NULL, null=True, default=None)
+    bitrix_id = models.IntegerField(unique=True)
+    gender = models.CharField(max_length=255, null=True, blank=True, choices=GENDER_CHOICES)
 
     def __str__(self):
         return self.names_woman
-
-
-
-# Женские имена таблица names_woman
-# Мужские имена таблица names_man
-

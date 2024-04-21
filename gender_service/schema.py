@@ -2,26 +2,14 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class MenNames(BaseModel):
-    id: Optional[int]
-    name_man: str
-    gender: Optional[str]
+class PersonContactRequest(BaseModel):
 
-
-class WomenNames(BaseModel):
-    id: Optional[int]
-    name_woman: str
-    gender: Optional[str]
-
-
-class ContactRequest(BaseModel):
-
-    id: int
+    bitrix_id: int
     name: str
 
 
-class ContactResponse(BaseModel):
+class PersonContactResponse(BaseModel):
 
-    id: int
+    bitrix_id: int
     name: str
     gender: str

@@ -1,13 +1,13 @@
 from fastapi import HTTPException, APIRouter
-from .schema import ContactRequest, ContactResponse
+from .schema import PersonContactRequest, PersonContactResponse
 from .services import set_gender
 
 
 router = APIRouter()
 
 
-@router.post("/", response_model=ContactResponse)
-def get_person_contact(item: ContactRequest):
+@router.patch("/", response_model=PersonContactResponse)
+def set_person_gender(item: PersonContactRequest):
 
     try:
         person = set_gender(contacts=item)
