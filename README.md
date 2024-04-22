@@ -24,3 +24,8 @@
 + Запустить из Docker: 
   + docker-compose build
   + docker-compose up
++ После этого приложение будет доступно на порту: http://localhost:8000/
++ Воспользоваться django-admin можно по адресу: http://localhost:8000/django/admin
++ Перед тем, как воспользоваться django-admin, следует создать superuser
+  + Войти в docker контейнер: docker exec -it <container_id> bash
+  + Создать superuser: python3 manage.py createsuperuser
